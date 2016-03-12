@@ -32,12 +32,15 @@ php7-zts:
    		fi && \
 		sudo ./configure --prefix=/usr/local/php7-zts \
 					--with-libdir=/lib/x86_64-linux-gnu \
-					--with-openssl=/usr \
+					--with-openssl \
 					--disable-cgi \
 					--enable-gd-native-ttf \
 					--enable-opcache \
 					--enable-mbstring \
 					--enable-sockets \
+					--enable-bcmath \
+					--with-bz2 \
+					--enable-zip \
 					--enable-mysqlnd \
 					--with-mysql \
 					--with-pdo-mysql \
@@ -53,4 +56,31 @@ php7-zts:
 		sudo cp /usr/local/src/php-src/php.ini-production /usr/local/php7-zts/lib/php.ini; \
 		sudo patch /usr/local/php7-zts/lib/php.ini php.ini.patch; \
 	fi
-	sudo ln -s /usr/local/php7-zts/bin/php /usr/local/bin/php7-zts
+	sudo ln -sf /usr/local/php7-zts/bin/php /usr/local/bin/php7-zts
+
+ebotv3:
+	@if ! command -v php7-zts >/dev/null 2>&1; then \
+		echo "==== Run 'make php7-zts' before trying to install eBot"; \
+		exit 1; \
+	fi
+	@echo "==== Installing dependencies"
+	sudo apt-get -y install nodejs util-linux
+	@if ! command -v node >/dev/null 2>&1; then \
+		echo "==== Symlinking node"; \
+		sudo ln -sf $$(command -v nodejs) /usr/bin/node; \
+	fi
+	@if ! id -u ebotv3 >/dev/null 2>&1; then \
+		echo "==== Adding user ebotv3"; \
+		sudo adduser ebotv3 --disabled-login; \
+	fi
+	@if [ ! -d /home/ebotv3/eBot-CSGO ]; then \
+		echo "==== No eBot-CSGO found, downloading..."; \
+		sudo runuser -l ebotv3 -c 'git clone https://github.com/deStrO/eBot-CSGO.git'; \
+	fi
+	@sudo runuser -l ebotv3 -c "\
+		cd eBot-CSGO && \
+		php7-zts -r \"eval('?>'.file_get_contents('https://getcomposer.org/installer'));\" && \
+		php7-zts composer.phar install && \
+		npm install socket.io formidable archiver; "
+	@echo
+	@echo "==== eBot installed, now run 'make ebotv3-config USER PASS' to configure MySQL and eBot"
