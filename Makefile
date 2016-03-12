@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: php7-zts ebotv3
+.PHONY: php7-zts ebotv3 ebotv3-config
 
 php7-zts:
 	@echo "==== Installing dependencies"
@@ -76,6 +76,13 @@ ebotv3:
 	@if [ ! -d /home/ebotv3/eBot-CSGO ]; then \
 		echo "==== No eBot-CSGO found, downloading..."; \
 		sudo runuser -l ebotv3 -c 'git clone https://github.com/deStrO/eBot-CSGO.git'; \
+		sudo patch /home/ebotv3/eBot-CSGO/bootstrap.php bootstrap.php.patch; \
+	fi
+	@if [ ! -d /home/ebotv3/eBot-CSGO-Web ]; then \
+		echo "==== No eBot-CSGO-Web found, downloading..."; \
+		sudo runuser -l ebotv3 -c "\
+			git clone https://github.com/deStrO/eBot-CSGO-Web.git'; \
+			cp config/app_user.yml.default config/app_user.yml; "
 	fi
 	@sudo runuser -l ebotv3 -c "\
 		cd eBot-CSGO && \
@@ -83,4 +90,18 @@ ebotv3:
 		php7-zts composer.phar install && \
 		npm install socket.io formidable archiver; "
 	@echo
-	@echo "==== eBot installed, now run 'make ebotv3-config USER PASS' to configure MySQL and eBot"
+	@echo "==== eBot installed, now run 'make ebotv3-config password=PASSWORD mysql=MYSQLROOTPASSWORD' to configure MySQL and eBot"
+
+ebotv3-config:
+	@mysql --user=root --password=$(mysql) <<< "\
+		GRANT ALL PRIVILEGES ON ebotv3.* TO 'ebotv3'@'localhost' IDENTIFIED BY '$(password)' WITH GRANT OPTION; \
+		CREATE DATABASE IF NOT EXISTS ebotv3; "
+	@sudo runuser -l ebotv3 -c "\
+		cd eBot-CSGO-Web && \
+		php symfony configure:database \"mysql:host=localhost;dbname=ebotv3\" ebotv3 $(password) && \
+		php symfony doctrine:insert-sql && \
+		php symfony guard:create-user --is-super-admin admin@ebotv3 admin $(password) && \
+   		php symfony cc; "
+	@echo
+	@echo "==== eBot and MySQL configured"
+	@echo "==== Don't forget to modify IPs in eBot-CSGO-Web/config/app_user.yml and eBot-CSGO/config/config.ini"
