@@ -119,3 +119,8 @@ ebotv3-ip:
 		cd eBot-CSGO-Web && \
 		sed -i 's/ebot_ip: .*$$/ebot_ip: $(ip)/' config/app_user.yml; \
 		php symfony cc; "
+
+run:
+	sudo su - ebotv3 -c "\
+		cd eBot-CSGO && \
+		php7-zts bootstrap.php; "
