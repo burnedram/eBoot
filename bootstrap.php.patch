@@ -1,0 +1,18 @@
+--- /home/ebotv3/eBot-CSGO/bootstrap.php.org	2016-03-12 19:30:19.096640966 +0100
++++ /home/ebotv3/eBot-CSGO/bootstrap.php	2016-03-12 19:30:26.628640966 +0100
+@@ -133,7 +133,7 @@
+ 
+ error_reporting(E_ERROR);
+ 
+-class LoggerArray extends Stackable {
++class LoggerArray extends Threaded {
+ 
+     public function run() {
+         
+@@ -192,4 +192,4 @@
+ $loggerData = new LoggerArray();
+ $thread = new LogReceiver($loggerData, $config->getBot_ip(), $config->getBot_port());
+ 
+-\eBot\Application\Application::getInstance()->run();
+\ No newline at end of file
++\eBot\Application\Application::getInstance()->run();

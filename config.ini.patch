@@ -1,0 +1,10 @@
+--- config/config.ini.org	2016-03-13 02:39:13.660640966 +0100
++++ config/config.ini	2016-03-13 02:39:02.536640966 +0100
+@@ -39,6 +39,7 @@
+ MAP[] = "de_mirage"
+ 
+ [WORKSHOP IDs]
++WORKSHOP[] = ""
+ 
+ [Settings]
+ COMMAND_STOP_DISABLED = false
