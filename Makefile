@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: php7-zts ebotv3 ebotv3-config
+.PHONY: php7-zts ebotv3 ebotv3-config ebotv3-ip
 
 php7-zts:
 	@echo "==== Installing dependencies"
@@ -113,3 +113,9 @@ ebotv3-config:
 	@echo "==== eBot and MySQL configured"
 	@echo "==== Dont forget to symlink eBot-CSGO-Web/web"
 	@echo "==== Change eBot ip with 'make ebotv3-ip ip=IP'"
+
+ebotv3-ip:
+	@sudo runuser -l ebotv3 -c "\
+		cd eBot-CSGO-Web && \
+		sed -i 's/ebot_ip: .*$$/ebot_ip: $(ip)/' config/app_user.yml; \
+		php symfony cc; "
