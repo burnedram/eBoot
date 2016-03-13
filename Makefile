@@ -64,7 +64,7 @@ ebotv3:
 		exit 1; \
 	fi
 	@echo "==== Installing dependencies"
-	sudo apt-get -y install nodejs npm util-linux crudini
+	sudo apt-get -y install nodejs npm util-linux crudini php5 php5-cli php5-mysql
 	@if ! command -v node >/dev/null 2>&1; then \
 		echo "==== Symlinking node"; \
 		sudo ln -sf $$(command -v nodejs) /usr/bin/node; \
