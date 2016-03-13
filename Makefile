@@ -5,7 +5,7 @@ php7-zts:
 	@echo "==== Installing dependencies"
 	sudo apt-get -y install build-essential git autoconf \
 		bison mysql-server mysql-client libmysqlclient-dev
-	sudo apt-get build-dep php5
+	sudo apt-get -y build-dep php5
 	@echo "==== Checking for php-src"
 	@if [ ! -d /usr/local/src/php-src ]; then \
 		echo "==== No php-src found, downloading..."; \
@@ -64,7 +64,7 @@ ebotv3:
 		exit 1; \
 	fi
 	@echo "==== Installing dependencies"
-	sudo apt-get -y install nodejs util-linux crudini
+	sudo apt-get -y install nodejs npm util-linux crudini
 	@if ! command -v node >/dev/null 2>&1; then \
 		echo "==== Symlinking node"; \
 		sudo ln -sf $$(command -v nodejs) /usr/bin/node; \
