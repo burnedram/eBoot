@@ -1,8 +1,7 @@
-# eBoot
-Script for installing and setting up eBot
-
-Helps you get eBot up and running using php7.
+# eBoot-CSGO
+This script helps you get eBot up and running using php7.
 The frontend still runs php5 (as of the date this was written) on a standard apache2 installation.
+Only tested on on a Xen virtualized machine running Debian Jessie, but it should work on any Debian based system with apt-get.
 
 # Installation
 Run these targets in order:
