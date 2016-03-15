@@ -116,6 +116,7 @@ ebotv3-config:
 
 ebotv3-ip:
 	@sudo runuser -l ebotv3 -c "\
+		crudini --set --existing eBot-CSGO/config/config.ini Config Bot_IP \\\"$(ip)\\\" && \
 		cd eBot-CSGO-Web && \
 		sed -i 's/ebot_ip: .*$$/ebot_ip: $(ip)/' config/app_user.yml; \
 		php symfony cc; "

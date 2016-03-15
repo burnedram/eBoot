@@ -34,8 +34,13 @@ Takes two arguments: 'password' and 'mysql'.
 ## make ebotv3-ip
 Takes one argument: 'ip'.
 
-'ip' will be the ip that the frontend will use to try to connect eBot. This means that if the eBot frontend is accessible from the internet and you intend to use it from the internet then you should pass your external IP to this target.
-In that case also forward port 12360, since that is the port eBot listens to by default. Otherwise this should be the host's internal IP.
+This changes two things:
+* The IP in eBot-CSGO/config/config.ini, which is the IP eBot will send to your CSGO server so that the server can talk back to eBot.
+* The IP in eBot-CSGO-Web/config/app_user.yml, which is the IP your browser will use to connect to eBot when in the admin panel.
+
+In most cases these will be the same but if you say want to have the admin panel accessible from the internet then you should edit app_user.yml yourself and point it to your exernal IP. In that case also forward port 12360, since that is the port eBot listens to by default.
+
+Hostnames (such as localhost) or loopback addresses (such as 127.0.0.1) doesn't always work so use the machines internal IP for best results.
 
 ## make apache-alias
 Adds an apache2 [Alias](https://httpd.apache.org/docs/current/mod/mod_alias.html#alias) so that the eBot frontend is accessible from /eBot-CSGO.
