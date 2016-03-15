@@ -114,8 +114,10 @@ ebotv3-config:
 		crudini --set --existing eBot-CSGO/config/config.ini BDD mysql_pass \\\"$(password)\\\" && \
 		cd eBot-CSGO-Web && \
 		php symfony configure:database \"mysql:host=localhost;dbname=ebotv3\" ebotv3 $(password) && \
-		php symfony doctrine:insert-sql && \
-		php symfony guard:create-user --is-super-admin admin@ebotv3 admin $(password); \
+		( php symfony doctrine:insert-sql || \
+			true ) && \
+		( php symfony guard:create-user --is-super-admin admin@ebotv3 admin $(password) || \
+			php symfony guard:change-password admin $(password) ) && \
    		php symfony cc; "
 	@echo
 	@echo "==== eBot and MySQL configured"

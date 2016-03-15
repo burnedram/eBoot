@@ -31,6 +31,10 @@ Takes two arguments: 'password' and 'mysql'.
 
 'mysql' must be the root password you entered when setting up mysql-server.
 
+You can (probably) ignore these errors that might occur:
+* SQLSTATE[HY000]: General error: 1005 Can't create table 'ebotv3.#sql-3728_93' (errno: 121)
+* SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@ebotv3' for key 'email_address'
+
 ## make ebotv3-ip
 Takes one argument: 'ip'.
 
