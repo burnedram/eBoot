@@ -99,6 +99,12 @@ ebotv3:
 	@echo "==== eBot installed, now run 'make ebotv3-config password=PASSWORD mysql=MYSQLROOTPASSWORD' to configure MySQL and eBot"
 
 ebotv3-config:
+	ifndef mysql
+		$(error parameter 'mysql' missing)
+	endif
+	ifndef password
+		$(error parameter 'password' missing)
+	endif
 	@mysql --user=root --password=$(mysql) <<< "\
 		GRANT ALL PRIVILEGES ON ebotv3.* TO 'ebotv3'@'localhost' IDENTIFIED BY '$(password)' WITH GRANT OPTION; \
 		CREATE DATABASE IF NOT EXISTS ebotv3; "
@@ -115,6 +121,9 @@ ebotv3-config:
 	@echo "==== Change eBot ip with 'make ebotv3-ip ip=IP'"
 
 ebotv3-ip:
+	ifndef ip
+		$(error parameter 'ip' missing)
+	endif
 	@sudo runuser -l ebotv3 -c "\
 		crudini --set --existing eBot-CSGO/config/config.ini Config Bot_IP \\\"$(ip)\\\" && \
 		cd eBot-CSGO-Web && \
