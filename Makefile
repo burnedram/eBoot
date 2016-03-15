@@ -94,7 +94,7 @@ ebotv3:
 		cd eBot-CSGO && \
 		php7-zts -r \"eval('?>'.file_get_contents('https://getcomposer.org/installer'));\" && \
 		php7-zts composer.phar install && \
-		npm install socket.io formidable archiver; "
+		npm install socket.io@0.9 formidable archiver; "
 	@echo
 	@echo "==== eBot installed, now run 'make ebotv3-config password=PASSWORD mysql=MYSQLROOTPASSWORD' to configure MySQL and eBot"
 
