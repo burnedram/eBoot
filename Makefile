@@ -79,7 +79,8 @@ ebotv3:
 		sudo patch /home/ebotv3/eBot-CSGO/bootstrap.php bootstrap.php.patch && \
 		sudo patch /home/ebotv3/eBot-CSGO/config/config.ini config.ini.patch && \
 		sudo patch /home/ebotv3/eBot-CSGO/src/eBot/Config/Config.php Config.php.patch && \
-		sudo patch /home/ebotv3/eBot-CSGO/src/eTools/Utils/Logger.php Logger.php.patch; \
+		sudo patch /home/ebotv3/eBot-CSGO/src/eTools/Utils/Logger.php Logger.php.patch && \
+		sudo patch /home/ebotv3/eBot-CSGO/src/eBot/Match/Match.php Match.php.patch; \
 	fi
 	@if [ ! -d /home/ebotv3/eBot-CSGO-Web ]; then \
 		echo "==== No eBot-CSGO-Web found, downloading..."; \
