@@ -47,7 +47,7 @@ In most cases these will be the same but if you say want to have the admin panel
 Hostnames (such as localhost) or loopback addresses (such as 127.0.0.1) doesn't always work so use the machines internal IP for best results.
 
 ## make apache-alias
-Adds an apache2 [Alias](https://httpd.apache.org/docs/current/mod/mod_alias.html#alias) so that the eBot frontend is accessible from /eBot-CSGO.
+Adds an apache2 [VirtualHost](https://httpd.apache.org/docs/2.4/vhosts/examples.html) so that the eBot frontend is accessible from a browser. The target is named apache-alias because of reasons.
 
 ## make run
 Runs eBot as the user 'ebotv3'
