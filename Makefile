@@ -140,6 +140,7 @@ apache-alias:
 	sudo chmod 644 /home/ebotv3/eBot-CSGO-Web/web/.htaccess
 	sudo patch /home/ebotv3/eBot-CSGO-Web/web/.htaccess htaccess.patch
 	sudo cp ebotv3.conf /etc/apache2/sites-enabled/ebotv3.conf
+	sudo a2enmod rewrite
 	sudo service apache2 restart
 
 run:
