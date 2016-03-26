@@ -139,9 +139,11 @@ ebotv3-ip:
 apache-alias:
 	sudo chmod 644 /home/ebotv3/eBot-CSGO-Web/web/.htaccess
 	sudo patch /home/ebotv3/eBot-CSGO-Web/web/.htaccess htaccess.patch
-	sudo cp ebotv3.conf /etc/apache2/sites-enabled/ebotv3.conf
+	sudo cp ebotv3.conf /etc/apache2/sites-available/ebotv3.conf
 	sudo a2enmod rewrite
 	sudo service apache2 restart
+	@echo "==== Don't forget to change \'ServerName\' in /etc/apache2/sites-available/ebotv3.conf"
+	@echo "==== Enable eBot website with \'a2ensite ebotv3.conf\'"
 
 run:
 	sudo su - ebotv3 -c "\
