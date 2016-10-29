@@ -76,9 +76,9 @@ ebotv3:
 	@if [ ! -d /home/ebotv3/eBot-CSGO ]; then \
 		echo "==== No eBot-CSGO found, downloading..."; \
 		sudo runuser -l ebotv3 -c 'git clone https://github.com/deStrO/eBot-CSGO.git'; \
+		sudo mv /home/ebotv3/eBot-CSGO/config/config.ini.smp /home/ebotv3/eBot-CSGO/config/config.ini; \
 		sudo patch /home/ebotv3/eBot-CSGO/bootstrap.php bootstrap.php.patch && \
 		sudo patch /home/ebotv3/eBot-CSGO/config/config.ini config.ini.patch && \
-		sudo patch /home/ebotv3/eBot-CSGO/src/eBot/Config/Config.php Config.php.patch && \
 		sudo patch /home/ebotv3/eBot-CSGO/src/eTools/Utils/Logger.php Logger.php.patch && \
 		sudo patch /home/ebotv3/eBot-CSGO/src/eBot/Match/Match.php Match.php.patch; \
 	fi
@@ -97,6 +97,9 @@ ebotv3:
 		php7-zts composer.phar install && \
 		npm install socket.io@0.9 formidable archiver; "
 	@echo
+	@sudo patch /home/ebotv3/eBot-CSGO/vendor/koraktor/steam-condenser/lib/Socket.php Socket.php.patch
+	@sudo patch /home/ebotv3/eBot-CSGO/vendor/koraktor/steam-condenser/lib/TCPSocket.php TCPSocket.php.patch
+	@sudo patch /home/ebotv3/eBot-CSGO/vendor/koraktor/steam-condenser/lib/UDPSocket.php UDPSocket.php.patch
 	@echo "==== eBot installed, now run 'make ebotv3-config password=PASSWORD mysql=MYSQLROOTPASSWORD' to configure MySQL and eBot"
 
 ebotv3-config:
@@ -112,7 +115,7 @@ ebotv3-config:
 		GRANT ALL PRIVILEGES ON ebotv3.* TO 'ebotv3'@'localhost' IDENTIFIED BY '$(password)' WITH GRANT OPTION; \
 		CREATE DATABASE IF NOT EXISTS ebotv3; "
 	@sudo runuser -l ebotv3 -c "\
-		crudini --set --existing eBot-CSGO/config/config.ini BDD mysql_pass \\\"$(password)\\\" && \
+		crudini --set --existing eBot-CSGO/config/config.ini BDD MYSQL_PASS \\\"$(password)\\\" && \
 		cd eBot-CSGO-Web && \
 		php symfony configure:database \"mysql:host=localhost;dbname=ebotv3\" ebotv3 $(password) && \
 		( php symfony doctrine:insert-sql || \
@@ -131,7 +134,7 @@ ebotv3-ip:
 		exit 1; \
 	fi
 	@sudo runuser -l ebotv3 -c "\
-		crudini --set --existing eBot-CSGO/config/config.ini Config Bot_IP \\\"$(ip)\\\" && \
+		crudini --set --existing eBot-CSGO/config/config.ini Config BOT_IP \\\"$(ip)\\\" && \
 		cd eBot-CSGO-Web && \
 		sed -i 's/ebot_ip: .*$$/ebot_ip: $(ip)/' config/app_user.yml; \
 		php symfony cc; "

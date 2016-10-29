@@ -1,0 +1,11 @@
+--- Socket.php.orig     2016-10-29 20:27:26.084793043 +0000
++++ Socket.php  2016-10-29 20:26:13.145949177 +0000
+@@ -18,7 +18,7 @@
+  * @author  Sebastian Staudt
+  * @package steam-condenser
+  */
+-abstract class Socket {
++abstract class SCSocket {
+
+     /**
+      * The IP address the socket is connected to

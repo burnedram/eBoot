@@ -1,0 +1,11 @@
+--- UDPSocket.php.orig  2016-10-29 20:27:03.857145336 +0000
++++ UDPSocket.php       2016-10-29 20:26:13.145949177 +0000
+@@ -19,7 +19,7 @@
+  * @author  Sebastian Staudt
+  * @package steam-condenser
+  */
+-class UDPSocket extends Socket {
++class UDPSocket extends SCSocket {
+
+     /**
+      * Connects the UDP socket to the host with the given IP address and port

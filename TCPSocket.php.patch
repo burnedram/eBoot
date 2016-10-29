@@ -1,0 +1,11 @@
+--- TCPSocket.php.orig  2016-10-29 20:26:51.757337122 +0000
++++ TCPSocket.php       2016-10-29 20:26:13.145949177 +0000
+@@ -19,7 +19,7 @@
+  * @author  Sebastian Staudt
+  * @package steam-condenser
+  */
+-class TCPSocket extends Socket {
++class TCPSocket extends SCSocket {
+
+     /**
+      * Connects the TCP socket to the host with the given IP address and port
