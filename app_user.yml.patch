@@ -4,9 +4,9 @@
  # white space are VERY important, don't remove it or it will not work
  # ----------------------------------------------------------------------
  
--  log_match: ../../ebotv3/logs/log_match
--  log_match_admin: ../../ebotv3/logs/log_match_admin
--  demo_path: ../../ebotv3/demos
+-  log_match: ../../ebot-csgo/logs/log_match
+-  log_match_admin: ../../ebot-csgo/logs/log_match_admin
+-  demo_path: ../../ebot-csgo/demos
 +  log_match: logs/log_match
 +  log_match_admin: logs/log_match_admin
 +  demo_path: demos
