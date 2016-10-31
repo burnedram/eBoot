@@ -151,3 +151,12 @@ run:
 	sudo su - ebotv3 -c "\
 		cd eBot-CSGO && \
 		php7-zts bootstrap.php; "
+
+demos:
+	@for demo in $$(find /home/steam/csgo/csgo-ds/csgo/ -name "*.dem" | xargs -L1 basename); do \
+		if [ ! -e /home/ebotv3/eBot-CSGO-Web/web/demos/$${demo}.zip ]; then \
+			echo Zipping $${demo}...; \
+			sudo runuser -l ebotv3 -c "zip /home/ebotv3/eBot-CSGO-Web/web/demos/$${demo}.zip /home/steam/csgo/csgo-ds/csgo/$${demo}"; \
+		fi \
+	done
+
