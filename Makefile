@@ -160,3 +160,30 @@ demos:
 		fi \
 	done
 
+remote-demos:
+        @if [ -z "$(host)" ] || [ -z "$(port)" ]; then \
+                echo "usage: remote-demos host=<host> port=<port>"; \
+                exit 1; \
+        fi
+        @demos=(); \
+        for demo in $$(ssh $(host) -p $(port) find /home/steam/csgo/csgo-ds/csgo/ -name "*.dem" | xargs -L1 basename); do \
+                if [ ! -e /home/ebotv3/eBot-CSGO-Web/web/demos/$${demo}.zip ]; then \
+                        echo "Add $${demo}"; \
+                        demos+=( $${demo} ); \
+                fi; \
+        done; \
+        if [ $${#demos[@]} -eq 0 ]; then \
+                echo "Nothing to be done"; \
+                exit 0; \
+        fi; \
+        ssh $(host) -p $(port) tar cvf __eBoot-demos__.tar -C /home/steam/csgo/csgo-ds/csgo $${demos[@]}; \
+        scp -P $(port) $(host):__eBoot-demos__.tar ./; \
+        ssh $(host) -p $(port) rm __eBoot-demos__.tar; \
+        tar xvf __eBoot-demos__.tar; \
+        rm __eBoot-demos__.tar; \
+        for demo in "$${demos[@]}"; do \
+                sudo runuser -l ebotv3 -c "zip /home/ebotv3/eBot-CSGO-Web/web/demos/$${demo}.zip $(shell pwd)/$${demo}" && \
+                rm $${demo}; \
+        done
+
+
